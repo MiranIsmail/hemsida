@@ -1,6 +1,4 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import TimeLogger from "./TimeLogger";
 
@@ -9,7 +7,9 @@ function App() {
 
   return (
     <div>
-      <h1>Time Logging App</h1>
+      <h1 className="glow">Time Logger</h1>
+      <h2>Pleas be aware that your data is stored locally in a cookie.</h2>
+      <h3>If you delete the cookie your data will be gone.</h3>
       <TimeLogger />
     </div>
   );

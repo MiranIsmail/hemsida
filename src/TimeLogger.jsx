@@ -18,7 +18,7 @@ const TimeLogger = () => {
 
   // Save logs to cookies
   const saveLogsToCookies = (updatedLogs) => {
-    Cookies.set("timeLogs", JSON.stringify(updatedLogs), { expires: 7 }); // Set expiration to 7 days
+    Cookies.set("timeLogs", JSON.stringify(updatedLogs), { expires: 360 }); // Set expiration to 360 days
   };
 
   // Start logging time
@@ -59,7 +59,6 @@ const TimeLogger = () => {
 
   return (
     <div style={{ padding: "20px", textAlign: "center" }}>
-      <h2>Time Logger</h2>
       <button onClick={handleStart} disabled={startTime}>
         Start Logging
       </button>
@@ -77,6 +76,8 @@ const TimeLogger = () => {
 
 // TimeLogs Component (to display the logs and allow deleting)
 const TimeLogs = ({ logs, onDelete }) => {
+  const colors = ["#FFB6C1", "#ADD8E6", "#90EE90", "#FFD700", "#FF6347"]; // Array of colors
+
   if (logs.length === 0) {
     return <p>No time logs yet!</p>;
   }
@@ -85,8 +86,11 @@ const TimeLogs = ({ logs, onDelete }) => {
     <div>
       <ul>
         {logs.map((log, index) => (
-          <li key={index}>
-            <div>
+          <li
+            key={index}
+            style={{ backgroundColor: colors[index % colors.length] }}
+          >
+            <div style={{ fontSize: "18px", color: "black" }}>
               <strong>Start:</strong> {new Date(log.start).toLocaleTimeString()}{" "}
               <br />
               <strong>End:</strong> {new Date(log.end).toLocaleTimeString()}{" "}
