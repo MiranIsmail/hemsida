@@ -76,7 +76,7 @@ const TimeLogger = () => {
 
 // TimeLogs Component (to display the logs and allow deleting)
 const TimeLogs = ({ logs, onDelete }) => {
-  const colors = ["#FFB6C1", "#ADD8E6", "#90EE90", "#FFD700", "#FF6347"]; // Array of colors
+  const colors = [ "#7D98A1", "#1C2321", "#0047AB"]; // Array of colors
 
   if (logs.length === 0) {
     return <p>No time logs yet!</p>;
@@ -95,7 +95,7 @@ const TimeLogs = ({ logs, onDelete }) => {
               <br />
               <strong>End:</strong> {new Date(log.end).toLocaleTimeString()}{" "}
               <br />
-              <strong>Duration:</strong> {log.duration} seconds
+              <strong>Duration:</strong> {(log.duration)/60} seconds
               <br />
               <button onClick={() => onDelete(index)}>Delete</button>
             </div>
