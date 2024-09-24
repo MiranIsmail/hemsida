@@ -15,6 +15,16 @@ const TimeLogger = () => {
       setLogs(JSON.parse(storedLogs));
     }
   }, []);
+  // Helper function to format duration
+  const formatDuration = (totalSeconds) => {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = Math.floor(totalSeconds % 60);
+
+    const pad = (num) => String(num).padStart(2, "0");
+
+    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+  };
 
   // Save logs to cookies
   const saveLogsToCookies = (updatedLogs) => {
@@ -32,12 +42,13 @@ const TimeLogger = () => {
 
     const currentEndTime = new Date();
     setEndTime(currentEndTime);
-
+    const d = new Date();
     // Create a new log entry
     const newLog = {
       start: startTime,
       end: currentEndTime,
-      duration: (currentEndTime - startTime) / 1000, // in seconds
+      duration: formatDuration((currentEndTime - startTime) / 1000),
+      date: d.toISOString().slice(0, 10),
     };
 
     // Update logs state and cookies
@@ -76,7 +87,7 @@ const TimeLogger = () => {
 
 // TimeLogs Component (to display the logs and allow deleting)
 const TimeLogs = ({ logs, onDelete }) => {
-  const colors = ["#FFB6C1", "#ADD8E6", "#90EE90", "#FFD700", "#FF6347"]; // Array of colors
+  const colors = ["#7D98A1", "#1C2321", "#0047AB"]; // Array of colors
 
   if (logs.length === 0) {
     return <p>No time logs yet!</p>;
@@ -91,11 +102,9 @@ const TimeLogs = ({ logs, onDelete }) => {
             style={{ backgroundColor: colors[index % colors.length] }}
           >
             <div style={{ fontSize: "18px", color: "black" }}>
-              <strong>Start:</strong> {new Date(log.start).toLocaleTimeString()}{" "}
+              <strong>Date</strong> {log.date} {""}
               <br />
-              <strong>End:</strong> {new Date(log.end).toLocaleTimeString()}{" "}
-              <br />
-              <strong>Duration:</strong> {log.duration} seconds
+              <strong>Duration:</strong> {log.duration}
               <br />
               <button onClick={() => onDelete(index)}>Delete</button>
             </div>
